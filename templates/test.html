@@ -1,0 +1,68 @@
+<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form method="post" action="{% url 'test' %}">
+        {% csrf_token %}
+<input type="button"  id="addrow" value="Add Row" />
+    <table id="myTable" class=" table order-list">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Gmail</td>
+            <td>Phone</td>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+    <tfoot>
+        <tr>
+
+        </tr>
+        <tr>
+        </tr>
+    </tfoot>
+</table>
+        <input type="submit">
+    </form>
+</div>
+</body>
+</html>
+<script>
+$(document).ready(function () {
+    var counter = 0;
+    $("#addrow").on("click", function () {
+         var newRow = $('<tr id="tr'+counter +'" >');
+        var cols = "";
+        cols += '<td><input type="text" class="form-control" name="name[]" id="name' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" name="mail[]" id="mail' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" name="phone[]" id="phone' + counter + '"/></td>';
+        {#cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete" onclick="return delme('+ counter +')">' +#}
+            cols +=  '</td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+});
+</script>
+<script>
+    //delete table row
+    function delme(id) {
+        if(id==0)
+        {
+            alert("sorry u can't delete this");
+            return false;
+        }
+        $('#name'+id).val('-1');
+        $('#mail'+id).val('-1');
+        $('#phone'+id).val('-1');
+
+        var result_style = document.getElementById('tr' +id).style;
+        result_style.display = 'none';
+    }
+    </script>
